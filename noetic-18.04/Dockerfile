@@ -45,7 +45,6 @@ RUN apt-get update \
 		wget \
 		gnupg2 \
 		lsb-release \
-        python3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -58,6 +57,7 @@ RUN curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt
 #
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        python3 \
         libpython3-dev \
         python3-rosdep \
         python3-rosinstall-generator \
@@ -66,7 +66,6 @@ RUN apt-get update \
         build-essential \
     && rosdep init \
     && rosdep update \
-    && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 
