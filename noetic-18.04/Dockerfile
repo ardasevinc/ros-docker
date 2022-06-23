@@ -31,7 +31,7 @@ RUN apt-get update \
 
 RUN pip3 install --no-cache-dir apt-mirror-updater \
     && apt-mirror-updater -c http://ubuntu.vargonen.com/ubuntu/ \
-    && pip uninstall -y apt-mirror-updater
+    && pip3 uninstall -y apt-mirror-updater
 
 
 #
