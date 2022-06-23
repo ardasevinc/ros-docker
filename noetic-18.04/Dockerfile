@@ -17,7 +17,7 @@ RUN apt-get update \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    curl python3-pip ca-certificates \
+    curl python3-pip ca-certificates python-setuptools \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
