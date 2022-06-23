@@ -29,7 +29,7 @@ RUN apt-get update \
 #     && apt-get clean \
 #     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir apt-mirror-updater \
+RUN pip3 install --no-cache-dir apt-mirror-updater \
     && apt-mirror-updater -c http://ubuntu.vargonen.com/ubuntu/ \
     && pip uninstall -y apt-mirror-updater
 
