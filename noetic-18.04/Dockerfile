@@ -62,8 +62,8 @@ RUN apt-get update \
         python3-rosdep \
         python3-rosinstall-generator \
         python3-vcstool \
-        python3-empy \
         build-essential \
+    && pip install --no-cache-dir empy \
     && rosdep init \
     && rosdep update \
     && rm -rf /var/lib/apt/lists/*
@@ -89,7 +89,6 @@ RUN mkdir ros_catkin_ws \
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        python3 \
         tmux \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
