@@ -62,6 +62,7 @@ RUN apt-get update \
         python3-rosdep \
         python3-rosinstall-generator \
         python3-vcstool \
+        python3-empy \
         build-essential \
     && rosdep init \
     && rosdep update \
