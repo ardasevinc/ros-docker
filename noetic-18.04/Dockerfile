@@ -63,7 +63,7 @@ RUN apt-get update \
         python3-rosinstall-generator \
         python3-vcstool \
         build-essential \
-    && pip install --no-cache-dir empy \
+    && pip3 install --no-cache-dir empy \
     && rosdep init \
     && rosdep update \
     && rm -rf /var/lib/apt/lists/*
