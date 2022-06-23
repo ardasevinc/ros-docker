@@ -78,7 +78,7 @@ RUN mkdir ros_catkin_ws \
     && vcs import --input noetic-ros_base.rosinstall ./src \
     && apt-get update \
     && rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic --skip-keys python3-pykdl -y \
-    && pip3 uninstall em -y && pip3 install --no-cache-dir empy \
+    && apt-get remove python3-em && apt-get install python3-empy \
     && python3 ./src/catkin/bin/catkin_make_isolated --install --install-space \
     /opt/ros/noetic -DCMAKE_BUILD_TYPE=Release \
     && apt-get clean \ 
