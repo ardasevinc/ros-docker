@@ -1,5 +1,5 @@
 #FROM docker.io/nvidia/cuda:11.7.0-devel-ubuntu18.04
-FROM nvidia/cudagl:11.4.2-devel AS cudagl
+FROM nvidia/cudagl:11.4.2-devel-ubuntu18.04 AS cudagl
 
 ARG DEBIAN_FRONTEND=noninteractive
 
