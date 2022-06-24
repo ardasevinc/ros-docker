@@ -73,7 +73,7 @@ RUN apt-get update \
 #
 RUN mkdir ros_catkin_ws \
     && cd ros_catkin_ws \
-    && rosinstall_generator ros_base vision_msgs joy --rosdistro noetic --deps --tar > noetic-ros_base.rosinstall \
+    && rosinstall_generator ros_base vision_msgs joy can_msgs canopen_402 canopen_chain_node canopen_master canopen_motor_node socketcan_bridge socketcan_interface --rosdistro noetic --deps --tar > noetic-ros_base.rosinstall \
     && mkdir src \
     && vcs import --input noetic-ros_base.rosinstall ./src \
     && apt-get update \
