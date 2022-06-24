@@ -97,7 +97,7 @@ RUN apt-get update \
 RUN mkdir /boldpilot
 WORKDIR /boldpilot
 
-# COPY py_requirements.txt /tmp
-# RUN pip install --no-cache-dir -r /tmp/py_requirements.txt
+COPY py_requirements.txt /tmp
+RUN pip3 install --no-cache-dir -r /tmp/py_requirements.txt
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
