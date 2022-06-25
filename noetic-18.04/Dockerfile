@@ -105,6 +105,12 @@ RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
 FROM cudagl as zed
 
+ARG CUDA_MAJOR=11
+ARG CUDA_MINOR=4
+ARG ZED_SDK_MAJOR=3
+ARG ZED_SDK_MINOR=7
+ARG UBUNTU_RELEASE_YEAR=20
+
 RUN echo "CUDA Version ${CUDA_MAJOR}.${CUDA_MINOR}.4" > /usr/local/cuda/version.txt
 
 WORKDIR /tmp
