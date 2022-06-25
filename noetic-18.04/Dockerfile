@@ -102,3 +102,27 @@ COPY py_requirements.txt /tmp
 RUN pip3 install --no-cache-dir -r /tmp/py_requirements.txt
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
+
+FROM cudagl as zed
+
+RUN echo "CUDA Version ${CUDA_MAJOR}.${CUDA_MINOR}.4" > /usr/local/cuda/version.txt
+
+WORKDIR /tmp
+
+# Setup the ZED SDK
+RUN apt-get update -y && apt-get install --no-install-recommends lsb-release wget less udev sudo build-essential cmake -y && \
+    wget -q -O ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run https://download.stereolabs.com/zedsdk/${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}/cu${CUDA_MAJOR}${CUDA_MINOR%.*}/ubuntu${UBUNTU_RELEASE_YEAR} && \
+    chmod +x ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run ; ./ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run silent && \
+    rm ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# # ZED Python API
+# RUN apt-get update -y && apt-get install --no-install-recommends python3 python3-pip libpng-dev libgomp1 -y && \ 
+#     wget download.stereolabs.com/zedsdk/pyzed -O /usr/local/zed/get_python_api.py && \
+#     python3 /usr/local/zed/get_python_api.py && \
+#     python3 -m pip install numpy opencv-python pyopengl *.whl && \
+#     rm *.whl ; rm -rf /var/lib/apt/lists/*
+
+# Make some tools happy
+RUN mkdir -p /root/Documents/ZED/
