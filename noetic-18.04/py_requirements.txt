@@ -9,7 +9,7 @@ kiwisolver
 matplotlib==3.*
 numpy==1.*
 packaging==21.3
-Pillow==9.*
+Pillow==8.*
 pygame==2.*
 pyparsing==3.0.7
 python-dateutil==2.8.2
