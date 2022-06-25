@@ -135,7 +135,7 @@ RUN apt-get update -y && apt-get install --no-install-recommends lsb-release wge
 RUN mkdir -p /root/Documents/ZED/
 
 RUN apt-get update \
-    && apt-get -y --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
         mesa-utils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
