@@ -1,0 +1,1 @@
+docker buildx build --load -t ardasevinc/boldpilot:noetic-l4t-r32.4.3 .

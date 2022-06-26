@@ -1,0 +1,1 @@
+docker buildx build --load -t ardasevinc/boldpilot:x86-noetic-18.04 .
