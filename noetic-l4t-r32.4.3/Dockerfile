@@ -53,6 +53,7 @@ RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E
 # install bootstrap dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+          python3 \
           python3-setuptools \
           python3-pip \
           libpython3-dev \
@@ -100,7 +101,6 @@ RUN mkdir ros_catkin_ws \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         tmux \
-        python3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
