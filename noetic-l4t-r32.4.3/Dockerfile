@@ -76,6 +76,7 @@ RUN mkdir ros_catkin_ws \
     && rosinstall_generator robot perception ros_canopen joy rviz --rosdistro noetic --deps --tar > noetic-ros_base.rosinstall \
     && mkdir src \
     && vcs import --input noetic-ros_base.rosinstall ./src \
+    && sed -i 's/python37/python3/' ./src/vision_opencv/cv_bridge/CMakeLists.txt \
     && apt-get update \
     && rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic --skip-keys python3-pykdl -y \
     && python3 ./src/catkin/bin/catkin_make_isolated --install --install-space \
