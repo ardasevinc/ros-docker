@@ -1,9 +1,6 @@
 ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.4.3
 FROM ${BASE_IMAGE} as l4t
 
-ARG ROS_PKG="robot perception ros_canopen joy rviz"
-ENV ROS_DISTRO=noetic
-ENV ROS_ROOT=/opt/ros/${ROS_DISTRO}
 ENV ROS_PYTHON_VERSION=3
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -18,6 +15,7 @@ ENV LC_ALL en_US.UTF-8
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         locales \
+    && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && locale-gen en_US.UTF-8
 
@@ -31,7 +29,6 @@ RUN apt-get update \
 #     && apt-mirror-updater -c http://ubuntu.vargonen.com/ubuntu/ \
 #     && pip3 uninstall -y apt-mirror-updater
 
-WORKDIR /workspace
 
 # add the ROS deb repo to the apt sources list
 RUN apt-get update && \
@@ -50,10 +47,19 @@ RUN apt-get update && \
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        software-properties-common \
+    && add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt-get install -y --no-install-recommends \
+        python3.10 \
+        libqt5x11extras5-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # install bootstrap dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-          python3 \
           python3-setuptools \
           python3-pip \
           libpython3-dev \
@@ -70,7 +76,6 @@ RUN mkdir ros_catkin_ws \
     && rosinstall_generator robot perception ros_canopen joy rviz --rosdistro noetic --deps --tar > noetic-ros_base.rosinstall \
     && mkdir src \
     && vcs import --input noetic-ros_base.rosinstall ./src \
-    && sed -i 's/python37/python3/' ./src/vision_opencv/cv_bridge/CMakeLists.txt \
     && apt-get update \
     && rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic --skip-keys python3-pykdl -y \
     && python3 ./src/catkin/bin/catkin_make_isolated --install --install-space \
