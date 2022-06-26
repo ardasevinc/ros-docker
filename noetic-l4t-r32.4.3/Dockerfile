@@ -21,28 +21,29 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && locale-gen en_US.UTF-8
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    curl python3-pip ca-certificates python3-setuptools \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends \
+#     curl python3-pip ca-certificates python3-setuptools \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --no-cache-dir apt-mirror-updater \
-    && apt-mirror-updater -c http://ubuntu.vargonen.com/ubuntu/ \
-    && pip3 uninstall -y apt-mirror-updater
+# RUN pip3 install --no-cache-dir apt-mirror-updater \
+#     && apt-mirror-updater -c http://ubuntu.vargonen.com/ubuntu/ \
+#     && pip3 uninstall -y apt-mirror-updater
 
 WORKDIR /workspace
 
 # add the ROS deb repo to the apt sources list
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-          git \
+        git \
 		cmake \
 		build-essential \
 		curl \
 		wget \ 
 		gnupg2 \
 		lsb-release \
+        ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
     
@@ -52,6 +53,8 @@ RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E
 # install bootstrap dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+          python3-setuptools \
+          python3-pip \
           libpython3-dev \
           python3-rosdep \
           python3-rosinstall-generator \
@@ -97,6 +100,7 @@ RUN mkdir ros_catkin_ws \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         tmux \
+        python3 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
