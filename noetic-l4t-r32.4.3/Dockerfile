@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.4.3
-FROM ${BASE_IMAGE}
+FROM ${BASE_IMAGE} as l4t
 
 ARG ROS_PKG="robot perception ros_canopen joy rviz"
 ENV ROS_DISTRO=noetic
@@ -112,7 +112,7 @@ RUN pip3 install --no-cache-dir -r /tmp/py_requirements.txt
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
-FROM cudagl as zed
+FROM l4t as zed
 
 ARG L4T_MINOR_VERSION=32
 ARG L4T_MINOR_VERSION=4
