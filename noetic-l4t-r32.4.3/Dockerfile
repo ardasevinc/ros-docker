@@ -1,8 +1,6 @@
 ARG BASE_IMAGE=nvcr.io/nvidia/l4t-base:r32.4.3
 FROM ${BASE_IMAGE} as l4t
 
-ENV ROS_PYTHON_VERSION=3
-
 ENV DEBIAN_FRONTEND=noninteractive
 
 ENV TZ Europe/Istanbul
@@ -41,25 +39,27 @@ RUN apt-get update && \
 		gnupg2 \
 		lsb-release \
         ca-certificates \
+        libqt5x11extras5-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
     
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        software-properties-common \
-    && add-apt-repository -y ppa:deadsnakes/ppa \
-    && apt-get install -y --no-install-recommends \
-        python3.10 \
-        libqt5x11extras5-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends \
+#         software-properties-common \
+#     && add-apt-repository -y ppa:deadsnakes/ppa \
+#     && apt-get install -y --no-install-recommends \
+#         python3.10 \
+#         libqt5x11extras5-dev \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 # install bootstrap dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+          python3 \
           python3-setuptools \
           python3-pip \
           libpython3-dev \
@@ -76,6 +76,7 @@ RUN mkdir ros_catkin_ws \
     && rosinstall_generator robot perception ros_canopen joy rviz --rosdistro noetic --deps --tar > noetic-ros_base.rosinstall \
     && mkdir src \
     && vcs import --input noetic-ros_base.rosinstall ./src \
+    && sed -i 's/python37/python3/' ./src/vision_opencv/cv_bridge/CMakeLists.txt \
     && apt-get update \
     && rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic --skip-keys python3-pykdl -y
 
@@ -113,8 +114,8 @@ RUN apt-get update \
 RUN mkdir /boldpilot
 WORKDIR /boldpilot
 
-COPY req.txt /tmp
-RUN pip3 install --no-cache-dir -r /tmp/req.txt
+COPY py_requirements.txt /tmp
+RUN pip3 install --no-cache-dir -r /tmp/py_requirements.txt
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
