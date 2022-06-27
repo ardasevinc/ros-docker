@@ -77,8 +77,9 @@ RUN mkdir ros_catkin_ws \
     && mkdir src \
     && vcs import --input noetic-ros_base.rosinstall ./src \
     && apt-get update \
-    && rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic --skip-keys python3-pykdl -y \
-    && python3 ./src/catkin/bin/catkin_make_isolated --install --install-space \
+    && rosdep install --from-paths ./src --ignore-packages-from-source --rosdistro noetic --skip-keys python3-pykdl -y
+
+RUN python3 ./src/catkin/bin/catkin_make_isolated --install --install-space \
     /opt/ros/noetic -DCMAKE_BUILD_TYPE=Release \
     -DPYTHON_EXECUTABLE=/usr/bin/python3 \
     && apt-get clean \ 
