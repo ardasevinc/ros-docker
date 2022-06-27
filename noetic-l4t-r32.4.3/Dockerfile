@@ -113,6 +113,7 @@ RUN apt-get update \
         subversion libportmidi-dev ffmpeg \ 
         libswscale-dev libavformat-dev \
         libavcodec-dev libfreetype6-dev \
+        python3-scipy \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
