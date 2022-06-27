@@ -110,6 +110,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+FROM l4t as boldpilot
+
 RUN mkdir /boldpilot
 WORKDIR /boldpilot
 
@@ -118,7 +120,7 @@ RUN pip3 install --no-cache-dir -r /tmp/py_requirements.txt
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
-FROM l4t as zed
+FROM boldpilot as zed
 
 ARG L4T_MINOR_VERSION=32
 ARG L4T_MINOR_VERSION=4
