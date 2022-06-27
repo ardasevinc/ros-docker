@@ -107,6 +107,12 @@ RUN mkdir ros_catkin_ws \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         tmux \
+        python3-matplotlib \ 
+        python3-dev libsdl2-image-dev libsdl2-mixer-dev \ 
+        libsdl2-ttf-dev libsdl2-dev libsmpeg-dev python3-numpy \ 
+        subversion libportmidi-dev ffmpeg \ 
+        libswscale-dev libavformat-dev \
+        libavcodec-dev libfreetype6-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
