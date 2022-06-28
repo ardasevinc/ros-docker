@@ -143,7 +143,6 @@ RUN apt-get update -y && apt-get install --no-install-recommends lsb-release wge
     echo "# R32 (release), REVISION: ${L4T_MINOR_VERSION}" > /etc/nv_tegra_release ; \
     wget -q --no-check-certificate -O ZED_SDK_Linux_JP.run https://download.stereolabs.com/zedsdk/${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}/jp${JETPACK_MAJOR}${JETPACK_MINOR}/jetsons && \
     chmod +x ZED_SDK_Linux_JP.run ; ./ZED_SDK_Linux_JP.run silent skip_tools && \
-    ln -s /lib/aarch64-linux-gnu/libusb-1.0.so.0 /usr/lib/aarch64-linux-gnu/libusb-1.0.so.0.1.0 && \
     rm -rf /usr/local/zed/resources/* \
     rm -rf ZED_SDK_Linux_JP.run && \
     rm -rf /var/lib/apt/lists/*
@@ -154,6 +153,7 @@ RUN ln -sf /usr/lib/aarch64-linux-gnu/tegra/libv4l2.so.0 /usr/lib/aarch64-linux-
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         mesa-utils \
+        libusb-1.0-0-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /boldpilot
