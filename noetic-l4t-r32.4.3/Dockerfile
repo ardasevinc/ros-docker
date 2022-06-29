@@ -154,6 +154,8 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         mesa-utils \
         libusb-1.0-0-dev \
+        python3-wrapt \
     && apt-get clean \
+    && pip3 install --no-cache-dir keyboard python-can \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /boldpilot
