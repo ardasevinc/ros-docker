@@ -103,26 +103,26 @@ RUN pip3 install --no-cache-dir -r /tmp/py_requirements.txt
 
 RUN echo "source /opt/ros/noetic/setup.bash" >> /root/.bashrc
 
-FROM cudagl as zed
+# FROM cudagl as zed
 
-ARG CUDA_MAJOR=11
-ARG CUDA_MINOR=4
-ARG ZED_SDK_MAJOR=3
-ARG ZED_SDK_MINOR=7
-ARG UBUNTU_RELEASE_YEAR=18
+# ARG CUDA_MAJOR=11
+# ARG CUDA_MINOR=4
+# ARG ZED_SDK_MAJOR=3
+# ARG ZED_SDK_MINOR=7
+# ARG UBUNTU_RELEASE_YEAR=18
 
-RUN echo "CUDA Version ${CUDA_MAJOR}.${CUDA_MINOR}.4" > /usr/local/cuda/version.txt
+# RUN echo "CUDA Version ${CUDA_MAJOR}.${CUDA_MINOR}.4" > /usr/local/cuda/version.txt
 
-WORKDIR /tmp
+# WORKDIR /tmp
 
-# Setup the ZED SDK
-RUN apt-get update -y && apt-get install --no-install-recommends lsb-release wget less udev sudo build-essential cmake -y && \
-    wget -q -O ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run https://download.stereolabs.com/zedsdk/${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}/cu${CUDA_MAJOR}${CUDA_MINOR%.*}/ubuntu${UBUNTU_RELEASE_YEAR} && \
-    chmod +x ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run ; ./ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run silent && \
-    ln -s /lib/x86_64-linux-gnu/libusb-1.0.so.0 /usr/lib/x86_64-linux-gnu/libusb-1.0.so && \
-    rm ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+# # Setup the ZED SDK
+# RUN apt-get update -y && apt-get install --no-install-recommends lsb-release wget less udev sudo build-essential cmake -y && \
+#     wget -q -O ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run https://download.stereolabs.com/zedsdk/${ZED_SDK_MAJOR}.${ZED_SDK_MINOR}/cu${CUDA_MAJOR}${CUDA_MINOR%.*}/ubuntu${UBUNTU_RELEASE_YEAR} && \
+#     chmod +x ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run ; ./ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run silent && \
+#     ln -s /lib/x86_64-linux-gnu/libusb-1.0.so.0 /usr/lib/x86_64-linux-gnu/libusb-1.0.so && \
+#     rm ZED_SDK_Linux_Ubuntu${UBUNTU_RELEASE_YEAR}.run && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/*
 
 # # ZED Python API
 # RUN apt-get update -y && apt-get install --no-install-recommends python3 python3-pip libpng-dev libgomp1 -y && \ 
@@ -132,7 +132,9 @@ RUN apt-get update -y && apt-get install --no-install-recommends lsb-release wge
 #     rm *.whl ; rm -rf /var/lib/apt/lists/*
 
 # Make some tools happy
-RUN mkdir -p /root/Documents/ZED/
+# RUN mkdir -p /root/Documents/ZED/
+
+FROM cudagl as can-builder
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
