@@ -137,6 +137,9 @@ RUN mkdir -p /root/Documents/ZED/
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         mesa-utils \
+        python3-wrapt \
+        can-utils \
+    && pip3 install python-can keyboard \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /boldpilot
