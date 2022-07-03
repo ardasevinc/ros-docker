@@ -141,7 +141,7 @@ RUN apt-get update \
         mesa-utils \
         python3-wrapt \
         can-utils \
-    && pip3 install python-can keyboard \
+    && pip3 install python-can keyboard cython numpy==1.19.5 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /boldpilot
