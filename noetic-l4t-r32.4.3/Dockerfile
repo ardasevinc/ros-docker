@@ -156,6 +156,6 @@ RUN apt-get update \
         libusb-1.0-0-dev \
         python3-wrapt \
     && apt-get clean \
-    && pip3 install --no-cache-dir keyboard python-can \
+    && pip3 install --no-cache-dir keyboard python-can cython numpy==1.19.5 \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /boldpilot
